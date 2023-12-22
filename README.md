@@ -6,3 +6,4 @@ The process begins with the preparation of plastic bottles, which are cut into s
 
 The final stage of the process involves the entry of the deformed filament into the 3D printer's extruder. At this point, the printer's motor takes on the responsibility of generating the necessary force to extrude the filament in a controlled manner. This approach not only stands out for its technical innovation but also promotes sustainability by reusing materials, contributing to the reduction of plastic waste, and providing a creative and eco-friendly solution for 3D printing manufacturing.
 
+![IMG_3760](https://github.com/ecodecat3d/ECOPRINT3D/assets/130211571/6bdca9b2-b693-4e9e-93d2-956d67e81cd1)
