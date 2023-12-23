@@ -1,4 +1,5 @@
 #include <U8g2lib.h>
+#include <PID_v1.h>
 
 
 U8G2_SH1106_128X64_NONAME_F_HW_I2C u8g2(U8G2_R0);
@@ -17,7 +18,9 @@ const unsigned char TEMP1 [] PROGMEM = {
    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
    0x00, 0x00, 0x00, 0x00, 0x0a, 0x00, 0x00, 0x00, 0xc0, 0x3f, 0x00, 0x00,
-   0x00, 0xe0, 0x7a, 0x00, 0x00, 0x00, 0x70, 0xe0, 0x00, 0x00, 0xfc, 0x30,
+   0x00, 0xe0, 0x7a, 0x00,
+   
+   0x00, 0x00, 0x70, 0xe0, 0x00, 0x00, 0xfc, 0x30,
    0xc0, 0x00, 0x00, 0xfc, 0x19, 0x80, 0x01, 0x00, 0x00, 0x18, 0x82, 0x01,
    0x00, 0x00, 0x18, 0x86, 0x01, 0x00, 0x00, 0x18, 0x86, 0x01, 0x00, 0x00,
    0x18, 0x86, 0x01, 0x00, 0xf0, 0x19, 0x86, 0x01, 0x00, 0xf8, 0x19, 0x86,
@@ -94,10 +97,11 @@ double Setpoint ; // will be the desired value
 double Input; //
 double Output ; //LED
 //PID parameters
-double Kp=7, Ki=0.3, Kd=0.5;
+double agrKp=4,agrKi=0,agrKd=0;
+double conKp=12,conKi=0.3,conKd=0;
 double Max = 220;
 
-PID myPID(&Input, &Output, &Setpoint, Kp, Ki, Kd, DIRECT);
+PID myPID(&Input, &Output, &Setpoint, conKp, conKi, conKd, DIRECT);
 
 
 void setup() {
@@ -108,7 +112,6 @@ void setup() {
   
   Setpoint = 200;
   myPID.SetMode(AUTOMATIC);
-  myPID.SetTunings(Kp, Ki, Kd);
   myPID.SetOutputLimits(D3,Max);
 }
 
@@ -146,30 +149,30 @@ void DISPLAY_OLED() {
     }
     else{
       if (TEMPERATURAPANTALLA >= 100) {
-        u8g2.setCursor(50,25);
+        u8g2.setCursor(50,30);
       }
       else{
         if(TEMPERATURAPANTALLA < 10){
-          u8g2.setCursor(86,25);
+          u8g2.setCursor(86,30);
         }
         else{
-          u8g2.setCursor(68,25);
+          u8g2.setCursor(68,30);
         }
       }
-      if (TEMPERATURA < 220){
+      if (TEMPERATURA < 230){
         u8g2.setFont(u8g2_font_spleen16x32_mu);
         u8g2.println(int(TEMPERATURAPANTALLA));
       }
       else{
-        u8g2.setCursor(50,25);
+        u8g2.setCursor(50,30);
         u8g2.setFont(u8g2_font_spleen16x32_mu);
         u8g2.println("MAX!");
       }
       u8g2.setFont(u8g2_font_tinytim_tf);
-      u8g2.setCursor(105,10);
+      u8g2.setCursor(105,15);
       u8g2.println("O");
       u8g2.setFont(u8g2_font_spleen16x32_mu);
-      u8g2.setCursor(112,25);
+      u8g2.setCursor(112,30);
       u8g2.println("C");
 
       u8g2.setCursor(50,60);
@@ -233,11 +236,22 @@ Input = TEMPERATURA;
   if (ESTAT==1){
     contador2 = contador2 + 1;
     if (contador2 == 2){
-      myPID.Compute();
-      contador2 =0;
+      double gap = abs(Setpoint-TEMPERATURA);
+      if (gap < 20){
+        myPID.SetTunings(conKp, conKi, conKd);
+      }
+      else {
+        myPID.SetTunings(agrKp, agrKi, agrKd); 
+      }
+        myPID.Compute();
+        contador2 = 0;
     }
   analogWrite(D3,Output);
   }
+  if (ESTAT==0){
+  analogWrite(D3, 0);
+  }
+}
   if (ESTAT==0){
   analogWrite(D3, 0);
   }
