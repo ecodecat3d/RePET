@@ -106,7 +106,7 @@ void setup() {
   Serial.begin(9600);
   pinMode(D0, INPUT);
   
-  Setpoint = 190;
+  Setpoint = 200;
   myPID.SetMode(AUTOMATIC);
   myPID.SetTunings(Kp, Ki, Kd);
   myPID.SetOutputLimits(D3,Max);
