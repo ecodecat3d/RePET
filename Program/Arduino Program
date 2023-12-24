@@ -252,7 +252,3 @@ Input = TEMPERATURA;
   analogWrite(D3, 0);
   }
 }
-  if (ESTAT==0){
-  analogWrite(D3, 0);
-  }
-}
