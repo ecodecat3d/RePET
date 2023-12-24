@@ -1,4 +1,4 @@
-# ECOPRINT3D
+# RePET
 
 ECOPRINT3D is a groundbreaking system designed for 3D printing using plastic bottles as raw material. The key to this system lies in the combination of various components that collaborate in transforming plastic bottles into filament suitable for 3D printing. Firstly, a heating block capable of reaching 200 degrees Celsius is complemented by a 1.6mm nozzle, playing an essential role in allowing controlled filament output.
 
