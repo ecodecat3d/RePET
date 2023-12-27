@@ -74,7 +74,7 @@ const unsigned char TEMP2 [] PROGMEM = {
 
 double Temperatura;
 int Vo;
-float R1 = 10000;              // resistencia fija del divisor de tension 
+float R1 = 1000;              // resistencia fija del divisor de tension 
 float logR2, R2;
 double TEMPERATURA;
 double TEMPERATURAPANTALLA;
@@ -99,7 +99,7 @@ double Output ; //LED
 //PID parameters
 double agrKp=4,agrKi=0,agrKd=0;
 double conKp=12,conKi=0.3,conKd=0;
-double Max = 220;
+double Max = 240;
 
 PID myPID(&Input, &Output, &Setpoint, conKp, conKi, conKd, DIRECT);
 
@@ -110,7 +110,7 @@ void setup() {
   Serial.begin(9600);
   pinMode(D0, INPUT);
   
-  Setpoint = 200;
+  Setpoint = 230;
   myPID.SetMode(AUTOMATIC);
   myPID.SetOutputLimits(D3,Max);
 }
@@ -159,7 +159,7 @@ void DISPLAY_OLED() {
           u8g2.setCursor(68,30);
         }
       }
-      if (TEMPERATURA < 230){
+      if (TEMPERATURA < 240){
         u8g2.setFont(u8g2_font_spleen16x32_mu);
         u8g2.println(int(TEMPERATURAPANTALLA));
       }
@@ -209,11 +209,11 @@ void THERMISTOR() {
   R2 = R1 * ((1023.0) / (float)Vo - 1.0); // conversion de tension a resistencia
   logR2 = log(R2);
   Serial.println(R2);
-  if (R2 > 8000){c1 = 0.8438162826e-03, c2 = 2.059601750e-04, c3 = 0.8615484887e-07;}
-  else {c1 = 2.262265129e-03, c2 = -0.6731882426e-04, c3 = 16.21392245e-07;}
+  c1 = 1.369358582e-03, c2 = 1.026280639e-04, c3 = 5.585196447e-07;
   
   TEMPERATURA = (1.0 / (c1 + c2 * logR2 + c3 * logR2 * logR2 * logR2)); // temperature in Kelvin
   TEMPERATURA = TEMPERATURA - 273.15; //convert Kelvin to Celcius
+  //Serial.println(TEMPERATURA);
   if (TEMPERATURA < 0) {TEMPERATURA = 0;}
     if (-2<= (TEMPERATURA - TEMPERATURAANT) <= 2){
   }
@@ -249,6 +249,9 @@ Input = TEMPERATURA;
   analogWrite(D3,Output);
   }
   if (ESTAT==0){
+  analogWrite(D3, 0);
+  }
+}
   analogWrite(D3, 0);
   }
 }
