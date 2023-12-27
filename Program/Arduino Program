@@ -110,7 +110,8 @@ void setup() {
   Serial.begin(9600);
   pinMode(D0, INPUT);
   
-  Setpoint = 220;
+  Setpoint = 230;
+  0;
   myPID.SetMode(AUTOMATIC);
   myPID.SetOutputLimits(D3,Max);
 }
@@ -249,9 +250,6 @@ Input = TEMPERATURA;
   analogWrite(D3,Output);
   }
   if (ESTAT==0){
-  analogWrite(D3, 0);
-  }
-}
   analogWrite(D3, 0);
   }
 }
