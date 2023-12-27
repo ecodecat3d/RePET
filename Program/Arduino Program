@@ -110,7 +110,7 @@ void setup() {
   Serial.begin(9600);
   pinMode(D0, INPUT);
   
-  Setpoint = 230;
+  Setpoint = 220;
   myPID.SetMode(AUTOMATIC);
   myPID.SetOutputLimits(D3,Max);
 }
