@@ -9,4 +9,4 @@ The final stage of the process involves the entry of the deformed filament into 
 ### Atention!
 This system has been implemented for Mingda printers. You can use the discount code 'ecodecat3d' for a €50 discount on your printers (Link to their website: https://3dmingdaofficial.com/es/collections/magician-series/products/magician-x2). If you wish to implement the system on your printer, you will need to edit the provided STEP files for your printer. Prior to implementation, ensure that the extruder can generate a minimum torque of 5kg*cm (equivalent to a Nema17 motor), operates at 24V, and is capable of printing at 255 degrees.
 
-![IMG_3692](https://github.com/ecodecat3d/RePET/assets/130211571/1659d311-d70f-4a90-94ed-0684454665c5)
+![IMG_4087](https://github.com/ecodecat3d/RePET/assets/130211571/475bfc18-7b13-45dc-8d75-b498d0b5e30d)
