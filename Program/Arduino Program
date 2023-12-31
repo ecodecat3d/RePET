@@ -97,7 +97,7 @@ double Setpoint ; // will be the desired value
 double Input; //
 double Output ; //LED
 //PID parameters
-double agrKp=4,agrKi=0,agrKd=0;
+double agrKp=6,agrKi=0,agrKd=0;
 double conKp=12,conKi=0.3,conKd=0;
 double Max = 240;
 
@@ -110,7 +110,7 @@ void setup() {
   Serial.begin(9600);
   pinMode(D0, INPUT);
   
-  Setpoint = 230;
+  Setpoint = 220;
   0;
   myPID.SetMode(AUTOMATIC);
   myPID.SetOutputLimits(D3,Max);
@@ -210,7 +210,8 @@ void THERMISTOR() {
   R2 = R1 * ((1023.0) / (float)Vo - 1.0); // conversion de tension a resistencia
   logR2 = log(R2);
   Serial.println(R2);
-  c1 = 1.369358582e-03, c2 = 1.026280639e-04, c3 = 5.585196447e-07;
+  if (R2 < 10500) {c1 = 1.369358582e-03, c2 = 1.026280639e-04, c3 = 5.585196447e-07;}
+  else{c1 = -3.532779690e-03, c2 = 8.606773781e-04, c3 = -19.80406727e-07;}
   
   TEMPERATURA = (1.0 / (c1 + c2 * logR2 + c3 * logR2 * logR2 * logR2)); // temperature in Kelvin
   TEMPERATURA = TEMPERATURA - 273.15; //convert Kelvin to Celcius
